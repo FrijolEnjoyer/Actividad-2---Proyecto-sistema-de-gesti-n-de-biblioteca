@@ -1,0 +1,12 @@
+# Node
+frontend/node_modules
+frontend/dist
+
+# Go
+backend/bin
+backend/build
+backend/coverage.out
+
+# Editor/OS
+.DS_Store
+.env
