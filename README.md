@@ -42,15 +42,16 @@ npm run dev
 ```
 
 ## Endpoints principales
+- `GET /api/health` verificar estado del servicio
 - `POST /api/users` crear usuario
 - `GET /api/users` listar usuarios
-- `DELETE /api/users?id=USER_ID` eliminar usuario
+- `DELETE /api/users?id=USER_ID` eliminar usuario (falla si tiene préstamos activos)
 - `POST /api/books` crear libro
 - `GET /api/books` listar libros
 - `GET /api/books/search?q=texto` buscar por título o autor
 - `DELETE /api/books?id=BOOK_ID` eliminar libro (si no está prestado)
-- `POST /api/loans/borrow` prestar
-- `POST /api/loans/return` devolver
+- `POST /api/loans/borrow` prestar libro: body JSON `{"userId":"U","bookId":"B"}`
+- `POST /api/loans/return` devolver libro: body JSON `{"userId":"U","bookId":"B"}`
 
 ## Pruebas
 - Backend (estructuras y servicio):
@@ -93,4 +94,12 @@ curl "http://localhost:8080/api/books/search?q=go"
 - Eliminar libro (solo si no está prestado):
 ```
 curl -X DELETE "http://localhost:8080/api/books?id=b1"
+```
+- Prestar libro:
+```
+curl -X POST http://localhost:8080/api/loans/borrow -H "Content-Type: application/json" -d '{"userId":"u1","bookId":"b1"}'
+```
+- Devolver libro:
+```
+curl -X POST http://localhost:8080/api/loans/return -H "Content-Type: application/json" -d '{"userId":"u1","bookId":"b1"}'
 ```
