@@ -1,4 +1,4 @@
-# Sistema de Gestión de Biblioteca (Etapa 1)
+# Sistema de Gestión de Biblioteca (Etapa 2)
 
 Prototipo funcional usando estructuras de datos lineales en Go (backend) y React (frontend), orquestado con Docker Compose.
 
