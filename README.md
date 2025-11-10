@@ -3,14 +3,16 @@
 Prototipo funcional usando estructuras de datos lineales en Go (backend) y React (frontend), orquestado con Docker Compose.
 
 ## Estructuras de datos
-- Lista enlazada (`internal/ds/list.go`): catálogo de libros
-- Pila (`internal/ds/stack.go`): historial de operaciones recientes
-- Cola (`internal/ds/queue.go`): solicitudes de préstamo pendientes
-- Arreglo (`internal/ds/array.go`): destacados con capacidad fija
+- Árboles binarios de búsqueda (`internal/ds/tree.go`):
+  - Libros y usuarios ordenados por ID para inserción/búsqueda/eliminación en O(log n) promedio.
+  - Préstamos activos indexados por ID de libro para validar disponibilidad y devoluciones.
+- Pila (`internal/ds/stack.go`): historial de operaciones recientes.
+- Cola (`internal/ds/queue.go`): (etapa anterior) solicitudes en secuencia, conservada como referencia.
+- Arreglo (`internal/ds/array.go`): destacados con capacidad fija.
 
 ## Operaciones
-- Libros: registrar, listar, buscar, prestar, devolver, eliminar
-- Usuarios: registrar, listar, eliminar
+- Libros: registrar, listar en orden, buscar por texto, prestar, devolver, eliminar (impide borrar si está prestado).
+- Usuarios: registrar, listar en orden, eliminar (impide borrar si tiene préstamos activos).
 
 ## Arquitectura
 - Backend Go: `backend/`
@@ -58,7 +60,8 @@ go test ./...
 ```
 
 ## Decisiones de diseño
-- Se usaron estructuras lineales para mostrar comprensión de operaciones básicas (push/pop, enqueue/dequeue, insert/find).
+- Se migró el modelo central a árboles de búsqueda binaria para optimizar la gestión de libros, usuarios y préstamos activos.
+- Se mantienen estructuras lineales para historial, destacados y como referencia de la etapa previa.
 - Sin base de datos: almacenamiento en memoria con estructuras diseñadas.
 - CORS habilitado para React.
 - UI con tema oscuro, tarjetas y botones con estados. Listas con recarga automática tras crear elementos (hot reload) y tras prestar/devolver.
@@ -68,6 +71,7 @@ go test ./...
 - Persistencia
 - Autenticación básica
 - Paginación y validaciones más estrictas
+- Balanceo del BST (AVL/Red-Black) si el patrón de inserciones produce degradación a O(n).
 
 ## Ejemplos (cURL)
 - Crear usuario:
